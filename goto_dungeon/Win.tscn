@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Win.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/tresure_found.jpg" type="Texture" id=2]
+
+[node name="Win" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="tresure_found" type="Sprite" parent="."]
+position = Vector2( 457.157, 286.523 )
+scale = Vector2( 0.891493, 0.880352 )
+texture = ExtResource( 2 )
