@@ -18,6 +18,14 @@ var look_direction = Vector2.RIGHT
 func _ready():
 	var color = get_color();
 	self.get_node(\"Highlighter\").modulate = color;
+	var attacker_nodes = get_tree().get_nodes_in_group('Enemies')
+	for node in attacker_nodes:
+		node.connect(\"attacked_player\", self, \"_on_attacked_player\") 
+
+func _on_attacked_player(player_input, attack):
+	if player_input == player:
+		null
+		#print('somebody attacked me ', player, ' with ', attack)
 
 func _physics_process(delta):
 	if input_drop_character():
@@ -126,7 +134,9 @@ func get_move_vec_for_player(player):
 radius = 7.0
 height = 0.718109
 
-[node name="Character" type="KinematicBody2D"]
+[node name="Character" type="KinematicBody2D" groups=[
+"Characters",
+]]
 collision_mask = 23
 script = SubResource( 1 )
 
