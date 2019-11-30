@@ -14,7 +14,7 @@ gradient = SubResource( 1 )
 script = ExtResource( 1 )
 
 [node name="start_screen" type="Sprite" parent="."]
-position = Vector2( 484.586, 240.994 )
+position = Vector2( 459.586, 240.994 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 2 )
 
