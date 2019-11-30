@@ -4,7 +4,7 @@
 [ext_resource path="res://Friends/Character.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Levels/Level1/Room2.tscn" type="PackedScene" id=3]
 
-[node name="Node2D" type="Node2D"]
+[node name="Level1" type="Node2D"]
 
 [node name="Room1" parent="." instance=ExtResource( 1 )]
 
@@ -13,3 +13,7 @@ position = Vector2( 229.129, 145.505 )
 
 [node name="Room2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 512, 0 )
+
+[node name="Character2" parent="." instance=ExtResource( 2 )]
+position = Vector2( 185.402, 159.777 )
+player = "p2"
