@@ -9,6 +9,12 @@ export var player = \"p1\"
 export var speed = 60
 export var character_type = CharacterType.NAKED
 
+var death_scene_path = \"res://Death.tscn\"
+
+func _ready():
+	pass 
+
+
 func _physics_process(delta):
 	var move_vec = get_move_vec_for_player(player)
 	move_and_slide(move_vec * speed)
@@ -48,7 +54,13 @@ func get_move_vec_for_player(player):
 	if Input.is_action_pressed(player + \"_right\"):
 		move_vec += Vector2.RIGHT
 	move_vec = move_vec.normalized()
+	
+	# test death
+	if Input.is_action_just_pressed('ui_select'):
+		globals.switch_scene(death_scene_path)
+		#pass
 	return move_vec
+	
 "
 
 [sub_resource type="CapsuleShape2D" id=2]
