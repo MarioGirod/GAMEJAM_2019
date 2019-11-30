@@ -2,7 +2,7 @@
 
 [ext_resource path="res://CharacterScenes/NakedGuy.tscn" type="PackedScene" id=1]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
 
 export var player = \"p1\"
@@ -39,14 +39,14 @@ func get_move_vec_for_player(player):
 	move_vec = move_vec.normalized()
 	return move_vec"
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=2]
 height = 0.718109
 
 [node name="Character" type="KinematicBody2D"]
-script = SubResource( 2 )
+script = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="NakedGuy" parent="." instance=ExtResource( 1 )]
 position = Vector2( 0.530334, -8.66206 )
