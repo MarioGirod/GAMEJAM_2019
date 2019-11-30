@@ -2,7 +2,7 @@
 
 [ext_resource path="res://CharacterScenes/Orc.tscn" type="PackedScene" id=1]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
 
 func filter_array(arr:Array, v):
@@ -11,7 +11,6 @@ func filter_array(arr:Array, v):
 		if arr[index] == v :
 			result.append(index)
 	return result		
-
 	
 
 # Called when the node enters the scene tree for the first time.
@@ -23,9 +22,9 @@ var idle_walk_timer = 0
 
 func _physics_process(delta):
 	
-	var target = choose_target()
+	var target = choose_target_in_room()
 	
-	if target :
+	if target:
 		var speed = choose_walk_speed(target)
 		move_to_target(target, speed)
 	else: 	
@@ -34,17 +33,40 @@ func _physics_process(delta):
 
 		
 func move_to_target(target, speed):
-	
-	
-	
-	pass
+	var target_dir = \"\"
+	var target_dir_x = round(target.global_position.x - global_position.x)
+	var target_dir_y = round(target.global_position.y - global_position.y)
+
+	if target_dir_x > 0 && target_dir_y > 0:
+		target_dir = \"RIGHTDOWN\"	
+	elif target_dir_x > 0 && target_dir_y < 0:
+		target_dir = \"RIGHTUP\"	
+	elif target_dir_x < 0 && target_dir_y > 0:
+		target_dir = \"LEFTDOWN\"	
+	elif target_dir_x < 0 && target_dir_y < 0:
+		target_dir = \"LEFTUP\"		
+	elif target_dir_x == 0 && target_dir_y > 0:
+		target_dir = \"DOWN\"	
+	elif target_dir_x == 0 && target_dir_y < 0:
+		target_dir = \"UP\"	
+	elif target_dir_x > 0 && target_dir_y == 0:
+		target_dir = \"RIGHT\"	
+	elif target_dir_x < 0 && target_dir_y == 0:
+		target_dir = \"LEFT\"		
+	move(speed, target_dir)
 	
 func scan_for_targets(n):
-	return null 	
+	var targets = get_tree().get_nodes_in_group('Characters')
+	var targeted = []
+	for target in targets:
+		var dist = Vector2(target.global_position.x - global_position.x,target.global_position.y - global_position.y).length() 
+		if dist < n :
+			targeted.append(target)
+	return targeted 	
 	
-func choose_target():
+func choose_target_in_room():
 	# Scan for targets in n range
-	var in_range = 5
+	var in_range = 80
 	var targets = scan_for_targets(in_range)
 
 	#if there is a target in range decide on target
@@ -77,8 +99,9 @@ func choose_target():
 					var rest_targets = filter_array(target_distances, target_distances_min)
 					return targets[randi()%rest_targets.size()]
 						
-					
+			else :		
 			# b) if targets are different choose target with highest priority
+				return targets[randi()%targets.size()]
 				# priority is a value given by distance and importance
 				# enemies that are in striking range should always be targeted (defense line)
 				# enemies that are naked should always be targeted (interest)	
@@ -86,14 +109,12 @@ func choose_target():
 	else:
 		 return null
 
-
-
 func choose_walk_speed(target):
 	var speed = 8
-	if target.type == 'NAKED' :
+	if target.character_type == CharacterType.NAKED :
 		speed = 16		
-	elif target.type == 'STRONG' :
-		speed = 4
+	elif target.character_type == CharacterType.DIVERS :
+		speed = 6
 				
 	return speed
 
@@ -108,9 +129,11 @@ func idle_walk():
 	if idle_walk_timer <= 6:
 		idle_walk_timer = 0;
 
+var direction = 'right'
+
 func move(speed, dir):
 	var move = Vector2(0,0)
-	var direction = 'left'
+	
 	var diagonal_speed = round(speed / 1.414)
 	var base_speed = 8.0
 	
@@ -144,11 +167,10 @@ func move(speed, dir):
 		
 	if dir == 'DOWN':
 		move.y += 1 * speed
-		direction = 'left'
 		
 	if dir == 'UP':	
 		move.y -= 1 * speed
-		direction = 'left'
+
 		
 	flip_sprite($Orc/Sprite, direction)	
 	move_and_slide(move)
@@ -184,15 +206,17 @@ func idle():
 #	pass
 "
 
-[sub_resource type="CapsuleShape2D" id=1]
+[sub_resource type="CapsuleShape2D" id=2]
 radius = 7.58712
 height = 15.681
 
-[node name="Enemy_Orc" type="KinematicBody2D"]
-script = SubResource( 2 )
+[node name="Enemy_Orc" type="KinematicBody2D" groups=[
+"Enemies",
+]]
+script = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0.270554, 1.48804 )
-shape = SubResource( 1 )
+shape = SubResource( 2 )
 
 [node name="Orc" parent="." instance=ExtResource( 1 )]
