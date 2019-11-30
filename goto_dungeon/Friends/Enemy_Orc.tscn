@@ -1,0 +1,198 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://CharacterScenes/Orc.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends KinematicBody2D
+
+func filter_array(arr:Array, v):
+	var result = []
+	for index in range(arr.size()):
+		if arr[index] == v :
+			result.append(index)
+	return result		
+
+	
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	#_idleWalk();
+	pass # Replace with function body.
+
+var idle_walk_timer = 0
+
+func _physics_process(delta):
+	
+	var target = choose_target()
+	
+	if target :
+		var speed = choose_walk_speed(target)
+		move_to_target(target, speed)
+	else: 	
+		idle_walk_timer += delta		
+		idle_walk()
+
+		
+func move_to_target(target, speed):
+	
+	
+	
+	pass
+	
+func scan_for_targets(n):
+	return null 	
+	
+func choose_target():
+	# Scan for targets in n range
+	var in_range = 5
+	var targets = scan_for_targets(in_range)
+
+	#if there is a target in range decide on target
+	if targets :
+
+		# if its only one target, return this target
+		if targets.size() == 1 :
+			return targets[0]
+		else :	
+			# if there is more than one target in range, 
+			var target = {}
+			
+			var target_types = []
+			var target_distances = []
+			#iterate over and test for character type
+			for elem in targets:
+				var distance = elem.position.x + elem.position.y
+				target_distances.append(distance)
+				if not target_types.has(elem.character_type):
+					target_types.append(elem.character_type)
+			# a) all targets are same? -> choose nearest target
+			if target_types.size() == 1 :
+				var target_distances_min = target_distances.min()
+				var index_count = target_distances.count(target_distances_min)
+				if index_count == 1 :
+					var index_target = target_distances.find(target_distances_min)
+					return targets[index_target]
+				else :
+					# if still same, decide randomly
+					var rest_targets = filter_array(target_distances, target_distances_min)
+					return targets[randi()%rest_targets.size()]
+						
+					
+			# b) if targets are different choose target with highest priority
+				# priority is a value given by distance and importance
+				# enemies that are in striking range should always be targeted (defense line)
+				# enemies that are naked should always be targeted (interest)	
+			return target
+	else:
+		 return null
+
+
+
+func choose_walk_speed(target):
+	var speed = 8
+	if target.type == 'NAKED' :
+		speed = 16		
+	elif target.type == 'STRONG' :
+		speed = 4
+				
+	return speed
+
+# Character walks one step in random direction (up, left, right, down)
+func idle_walk():
+	var idle_speed = 8
+# 1. Character should automatically walk and look to the right
+	if idle_walk_timer <= 3 :
+		move(idle_speed, 'RIGHT')
+	else :
+		move(idle_speed, 'LEFT')
+	if idle_walk_timer <= 6:
+		idle_walk_timer = 0;
+
+func move(speed, dir):
+	var move = Vector2(0,0)
+	var direction = 'left'
+	var diagonal_speed = round(speed / 1.414)
+	var base_speed = 8.0
+	
+	if dir == 'RIGHTDOWN':
+		move.x += 1 * diagonal_speed
+		move.y -= 1 * diagonal_speed
+		direction = 'right'
+	
+	if dir == 'LEFTDOWN':
+		move.x -= 1 * diagonal_speed
+		move.y += 1 * diagonal_speed
+		direction = 'left'	
+	
+	if dir == 'RIGHTDOWN':
+		move.x += 1 * diagonal_speed
+		move.y += 1 * diagonal_speed
+		direction = 'right'
+			
+	if dir == 'LEFTUP':	
+		move.x -= 1 * diagonal_speed	
+		move.y -= 1 * diagonal_speed
+		direction = 'left'
+		
+	if dir == 'RIGHT':	
+		move.x += 1 * speed
+		direction = 'right'
+	
+	if dir == 'LEFT':
+		move.x -= 1 * speed
+		direction = 'left'
+		
+	if dir == 'DOWN':
+		move.y += 1 * speed
+		direction = 'left'
+		
+	if dir == 'UP':	
+		move.y -= 1 * speed
+		direction = 'left'
+		
+	flip_sprite($Orc/Sprite, direction)	
+	move_and_slide(move)
+	
+	$Orc/AnimationPlayer.playback_speed = ((speed/(2*base_speed)) + 0.5)
+	$Orc/AnimationPlayer.play(\"Walk\")
+
+func flip_sprite(sprite, direction):
+	if	direction == 'left' : 
+		sprite.flip_h = true
+	else :
+		sprite.flip_h = false
+
+func turn_to_target(target):
+	if target.position.x >= $Orc/Sprite.position.x:
+		flip_sprite($Orc/Sprite, 'right')
+	else :
+		flip_sprite($Orc/Sprite, 'left')	
+	
+func attack():
+	#use attack animation
+	$Orc/AnimationPlayer.play(\"Attack\")
+	
+func seeTarget():
+	pass		
+	
+func idle():
+	pass
+	
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+"
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 7.58712
+height = 15.681
+
+[node name="Enemy_Orc" type="KinematicBody2D"]
+script = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.270554, 1.48804 )
+shape = SubResource( 1 )
+
+[node name="Orc" parent="." instance=ExtResource( 1 )]
