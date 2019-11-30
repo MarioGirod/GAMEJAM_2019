@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://CharacterScenes/NakedGuy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Sprites/arrows.png" type="Texture" id=2]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -19,7 +20,7 @@ func _ready():
 
 func _ready():
 	var color = get_color();
-	self.get_node(\"ColorRect\").color = color;
+	self.get_node(\"Highlighter\").modulate = color;
 
 func _physics_process(delta):
 	if input_drop_character():
@@ -103,12 +104,16 @@ func get_move_vec_for_player(player):
 	var move_vec = Vector2(0, 0)
 	if Input.is_action_pressed(player + \"_up\"):
 		move_vec += Vector2.UP
+		self.get_node(\"Highlighter\").frame = 0
 	if Input.is_action_pressed(player + \"_down\"):
 		move_vec += Vector2.DOWN
+		self.get_node(\"Highlighter\").frame = 1		
 	if Input.is_action_pressed(player + \"_left\"):
 		move_vec += Vector2.LEFT
+		self.get_node(\"Highlighter\").frame = 2		
 	if Input.is_action_pressed(player + \"_right\"):
 		move_vec += Vector2.RIGHT
+		self.get_node(\"Highlighter\").frame = 3		
 	move_vec = move_vec.normalized()
 	
 	# test death
@@ -133,10 +138,8 @@ shape = SubResource( 2 )
 [node name="NakedGuy" parent="." instance=ExtResource( 1 )]
 position = Vector2( 0.530334, -8.66206 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchor_right = 1.0
-margin_left = -7.0
-margin_top = 7.0
-margin_right = 8.0
-margin_bottom = 8.0
-color = Color( 0.0588235, 0.356863, 0.823529, 1 )
+[node name="Highlighter" type="Sprite" parent="."]
+position = Vector2( 0.971386, 9.20495 )
+scale = Vector2( 0.206709, 0.0615164 )
+texture = ExtResource( 2 )
+hframes = 4
