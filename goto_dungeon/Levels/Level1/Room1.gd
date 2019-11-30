@@ -1,4 +1,4 @@
-extends Area2D
+extends Node2D
 
 # Declare member variables here. Examples:
 # var a = 2
@@ -12,13 +12,7 @@ func _ready():
 #func _process(delta):
 #	pass
 
-
-func _on_Lever_body_entered(body):
-	$Sprite.frame = 1
-	var room = get_parent()
-	if room.has_method("lever_called"):
-		room.lever_called(self)
-
-
-func _on_Lever_body_exited(body):
-	$Sprite.frame = 0
+func lever_called(lever):
+	var root = get_parent()
+	if root.has_method("room_complete"):
+		root.room_complete(self)
