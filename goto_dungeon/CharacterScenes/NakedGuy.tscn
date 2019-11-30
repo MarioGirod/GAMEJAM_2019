@@ -99,10 +99,8 @@ tracks/1/keys = {
 [node name="NakedGuy" type="Node2D"]
 
 [node name="Sprite" type="Sprite" parent="."]
-rotation = 3.14159
 texture = ExtResource( 1 )
 hframes = 10
-frame = 9
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Die = SubResource( 1 )

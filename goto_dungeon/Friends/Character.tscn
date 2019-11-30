@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://CharacterScenes/NakedGuy.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends KinematicBody2D
+
+export var player = \"p1\"
+export var speed = 60
+
+func _physics_process(delta):
+	var move_vec = get_move_vec_for_player(player)
+	move_and_slide(move_vec * speed)
+	flip_sprite(move_vec)
+	choose_animation(move_vec)
+
+func choose_animation(vec: Vector2):
+	if vec.x == 0 and vec.y == 0:
+		$NakedGuy/AnimationPlayer.play(\"Idle\")
+	else:
+		$NakedGuy/AnimationPlayer.play(\"Walk\")
+
+func flip_sprite(vec: Vector2):
+	if vec.x < 0:
+		$NakedGuy/Sprite.flip_h = true
+	if vec.x > 0:
+		$NakedGuy/Sprite.flip_h = false
+
+func get_move_vec_for_player(player):
+	var move_vec = Vector2(0, 0)
+	if Input.is_action_pressed(player + \"_up\"):
+		move_vec += Vector2.UP
+	if Input.is_action_pressed(player + \"_down\"):
+		move_vec += Vector2.DOWN
+	if Input.is_action_pressed(player + \"_left\"):
+		move_vec += Vector2.LEFT
+	if Input.is_action_pressed(player + \"_right\"):
+		move_vec += Vector2.RIGHT
+	move_vec = move_vec.normalized()
+	return move_vec"
+
+[sub_resource type="CapsuleShape2D" id=2]
+height = 0.718109
+
+[node name="Character" type="KinematicBody2D"]
+script = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="NakedGuy" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0.530334, -8.66206 )
