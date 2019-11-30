@@ -1,12 +1,22 @@
 extends Node
 
 var current_scene = null
+var current_level_path = null
 var win_scene = null
 var thread_pool = []
 
 func _ready():
 	#On load set the current scene to the last scene available
-	current_scene = get_tree().get_root().get_child(get_tree().get_root().get_child_count() -1)	
+	current_scene = get_tree().get_root().get_child(get_tree().get_root().get_child_count() -1)
+
+func start_level(scene_path):
+	current_level_path = scene_path
+	switch_scene(scene_path)
+
+
+func restart_level(delay_sec):
+	yield(get_tree().create_timer(delay_sec), "timeout")
+	switch_scene(current_level_path)
 
 
 func switch_scene(scene_path):
