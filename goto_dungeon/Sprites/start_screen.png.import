@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tresure_found.jpg-a61664d88dea1aa43ae27d31f18f662e.stex"
+path="res://.import/start_screen.png-3f9a6d5bb41b75ee34b3ad9bc49c25cc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/tresure_found.jpg"
-dest_files=[ "res://.import/tresure_found.jpg-a61664d88dea1aa43ae27d31f18f662e.stex" ]
+source_file="res://Sprites/start_screen.png"
+dest_files=[ "res://.import/start_screen.png-3f9a6d5bb41b75ee34b3ad9bc49c25cc.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=true
+flags/filter=false
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
