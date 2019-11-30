@@ -52,6 +52,7 @@ func get_move_vec_for_player(player):
 "
 
 [sub_resource type="CapsuleShape2D" id=2]
+radius = 7.0
 height = 0.718109
 
 [node name="Character" type="KinematicBody2D"]
