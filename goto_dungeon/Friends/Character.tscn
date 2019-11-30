@@ -17,6 +17,10 @@ var look_direction = Vector2.RIGHT
 func _ready():
 	pass 
 
+func _ready():
+	var color = get_color();
+	self.get_node(\"ColorRect\").color = color;
+
 func _physics_process(delta):
 	if input_drop_character():
 		choose_animation(Vector2.ZERO)
@@ -34,6 +38,16 @@ func change_character_with_item(item: KinematicBody2D, scene: PackedScene, type)
 		item.get_parent().remove_child(item)
 		var node = scene.instance()
 		change_character(node, type)
+
+func get_color():
+	var color = Color(0, 1, 0, 1); # lime default
+	if (self.name == 'Character'):
+		color = Color(1, 1, 0, 1); # yellow
+	elif (self.name == 'Character2'):
+		color = Color( 0, 1, 1, 1 ); # aqua
+	elif (self.name == 'Character3'):
+		color = Color( 1, 0, 0, 1 ); # red
+	return color;
 
 func change_character(node: Node2D, type):
 	var before = $NakedGuy
@@ -118,3 +132,11 @@ shape = SubResource( 2 )
 
 [node name="NakedGuy" parent="." instance=ExtResource( 1 )]
 position = Vector2( 0.530334, -8.66206 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+margin_left = -7.0
+margin_top = 7.0
+margin_right = 8.0
+margin_bottom = 8.0
+color = Color( 0.0588235, 0.356863, 0.823529, 1 )
