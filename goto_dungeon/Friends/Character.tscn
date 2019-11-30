@@ -11,21 +11,30 @@ export var character_type = CharacterType.NAKED
 export var naked_guy = preload(\"res://CharacterScenes/NakedGuy.tscn\")
 
 var death_scene_path = \"res://Death.tscn\"
+var character_item: KinematicBody2D = null
+var look_direction = Vector2.RIGHT
 
 func _ready():
 	pass 
-
 
 func _physics_process(delta):
 	if input_drop_character():
 		choose_animation(Vector2.ZERO)
 	else:
 		var move_vec = get_move_vec_for_player(player)
+		look_direction = get_look_direction(move_vec)
 		move_and_slide(move_vec * speed)
 		flip_sprite(move_vec)
 		choose_animation(move_vec)
 
 # called from items too
+func change_character_with_item(item: KinematicBody2D, scene: PackedScene, type):
+	if character_item == null:
+		character_item = item
+		item.get_parent().remove_child(item)
+		var node = scene.instance()
+		change_character(node, type)
+
 func change_character(node: Node2D, type):
 	var before = $NakedGuy
 
@@ -40,12 +49,29 @@ func change_character(node: Node2D, type):
 func input_drop_character():
 	if Input.is_action_just_pressed(player + \"_drop\") and character_type != CharacterType.NAKED:
 		drop_character()
+		throw_character_item()
 		return true
 	return false
 
 func drop_character():
 	var node = naked_guy.instance()
 	change_character(node, CharacterType.NAKED)
+
+func throw_character_item():
+	if character_item:
+		var node = character_item.duplicate()
+		character_item = null
+		get_parent().add_child(node)
+		var a = (position / 16).round()
+		var b = (a + 3 * look_direction) * 16
+		node.position = b
+
+func get_look_direction(vec: Vector2):
+	if vec.x < 0: return Vector2.LEFT
+	if vec.x > 0: return Vector2.RIGHT
+	if vec.y < 0: return Vector2.UP
+	if vec.y > 0: return Vector2.DOWN
+	return look_direction
 
 func choose_animation(vec: Vector2):
 	if vec.x == 0 and vec.y == 0:
