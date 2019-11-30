@@ -8,6 +8,7 @@ script/source = "extends KinematicBody2D
 export var player = \"p1\"
 export var speed = 60
 export var character_type = CharacterType.NAKED
+export var naked_guy = preload(\"res://CharacterScenes/NakedGuy.tscn\")
 
 var death_scene_path = \"res://Death.tscn\"
 
@@ -16,20 +17,35 @@ func _ready():
 
 
 func _physics_process(delta):
-	var move_vec = get_move_vec_for_player(player)
-	move_and_slide(move_vec * speed)
-	flip_sprite(move_vec)
-	choose_animation(move_vec)
+	if input_drop_character():
+		choose_animation(Vector2.ZERO)
+	else:
+		var move_vec = get_move_vec_for_player(player)
+		move_and_slide(move_vec * speed)
+		flip_sprite(move_vec)
+		choose_animation(move_vec)
 
+# called from items too
 func change_character(node: Node2D, type):
-	var t = $NakedGuy.transform
-	remove_child($NakedGuy)
-	
+	var before = $NakedGuy
+
 	node.name = \"NakedGuy\"
-	node.transform = t
-	add_child(node)
-	
+	node.transform = before.transform
+	node.get_node(\"Sprite\").flip_h = before.get_node(\"Sprite\").flip_h
 	character_type = type
+
+	remove_child(before)
+	add_child(node)
+
+func input_drop_character():
+	if Input.is_action_just_pressed(player + \"_drop\") and character_type != CharacterType.NAKED:
+		drop_character()
+		return true
+	return false
+
+func drop_character():
+	var node = naked_guy.instance()
+	change_character(node, CharacterType.NAKED)
 
 func choose_animation(vec: Vector2):
 	if vec.x == 0 and vec.y == 0:
