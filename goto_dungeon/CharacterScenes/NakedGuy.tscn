@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Sprites/chraracterSprites/naked.png" type="Texture" id=1]
 
@@ -15,7 +15,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 9 ]
+"values": [ 17 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:rotation_degrees")
@@ -43,6 +43,23 @@ tracks/2/keys = {
 }
 
 [sub_resource type="Animation" id=2]
+resource_name = "Dodge"
+length = 0.8
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 9, 10, 11, 12, 13, 14, 15, 16 ]
+}
+
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
@@ -68,7 +85,7 @@ tracks/1/keys = {
 "values": [ 0.0 ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 length = 0.8
 loop = true
 tracks/0/type = "value"
@@ -100,9 +117,11 @@ tracks/1/keys = {
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
-hframes = 10
+hframes = 18
+frame = 10
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Die = SubResource( 1 )
-anims/Idle = SubResource( 2 )
-anims/Walk = SubResource( 3 )
+anims/Dodge = SubResource( 2 )
+anims/Idle = SubResource( 3 )
+anims/Walk = SubResource( 4 )
