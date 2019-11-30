@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Friends/Character.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Friends/TestItem.tscn" type="PackedScene" id=2]
 
 [node name="CharacterTest" type="Node2D"]
 
@@ -18,3 +19,5 @@ player = "p3"
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
 zoom = Vector2( 0.25, 0.25 )
+
+[node name="TestItem" parent="." instance=ExtResource( 2 )]

@@ -7,12 +7,23 @@ script/source = "extends KinematicBody2D
 
 export var player = \"p1\"
 export var speed = 60
+export var character_type = CharacterType.NAKED
 
 func _physics_process(delta):
 	var move_vec = get_move_vec_for_player(player)
 	move_and_slide(move_vec * speed)
 	flip_sprite(move_vec)
 	choose_animation(move_vec)
+
+func change_character(node: Node2D, type):
+	var t = $NakedGuy.transform
+	remove_child($NakedGuy)
+	
+	node.name = \"NakedGuy\"
+	node.transform = t
+	add_child(node)
+	
+	character_type = type
 
 func choose_animation(vec: Vector2):
 	if vec.x == 0 and vec.y == 0:
@@ -37,7 +48,8 @@ func get_move_vec_for_player(player):
 	if Input.is_action_pressed(player + \"_right\"):
 		move_vec += Vector2.RIGHT
 	move_vec = move_vec.normalized()
-	return move_vec"
+	return move_vec
+"
 
 [sub_resource type="CapsuleShape2D" id=2]
 height = 0.718109

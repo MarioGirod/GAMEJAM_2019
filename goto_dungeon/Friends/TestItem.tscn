@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Area2D
+class_name TestItem
+
+export var type = \"TestItem\"
+export var character_scene = preload(\"res://CharacterScenes/FemaleCleric.tscn\")
+
+func _on_TestItem_body_entered(body):
+	print(\"body entered \", body)
+	if body.has_method(\"change_character\"):
+		var node = character_scene.instance()
+		body.change_character(node, CharacterType.DIVERS)"
+
+[sub_resource type="CapsuleShape2D" id=2]
+
+[node name="TestItem" type="Area2D"]
+script = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 0.261799
+shape = SubResource( 2 )
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+polygon = PoolVector2Array( -8, 16, 0, -16, 8, -16, 0, 16, -8, 16 )
+[connection signal="body_entered" from="." to="." method="_on_TestItem_body_entered"]
