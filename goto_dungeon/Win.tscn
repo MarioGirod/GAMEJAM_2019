@@ -4,11 +4,12 @@
 [ext_resource path="res://Sprites/win_screen.png" type="Texture" id=2]
 
 [sub_resource type="Gradient" id=1]
-offsets = PoolRealArray( 1.61149e-43, 0.585034 )
-colors = PoolColorArray( 1, 1, 1, 1, 0, 0, 0, 1 )
+offsets = PoolRealArray( 0.437931, 1 )
+colors = PoolColorArray( 0.996078, 0.996078, 0.996078, 1, 0.176471, 0.0941176, 0.0117647, 1 )
 
 [sub_resource type="GradientTexture" id=2]
 gradient = SubResource( 1 )
+width = 2000
 
 [node name="Win" type="Node2D"]
 script = ExtResource( 1 )
@@ -20,9 +21,10 @@ z_index = 2
 texture = ExtResource( 2 )
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2( -413.135, -295.336 )
-scale = Vector2( 24.9739, 32.0809 )
+position = Vector2( 1698.07, -219.458 )
+rotation = -4.71239
+scale = Vector2( 16.2053, 56.8573 )
 z_index = -1
 texture = SubResource( 2 )
-texture_scale = Vector2( 10, 1 )
+texture_scale = Vector2( 50, 1 )
 polygon = PoolVector2Array( 0.00908279, 0.891641, 76.3618, 0.757973, 76.3618, 39.5216, 0.00907898, 39.5216 )

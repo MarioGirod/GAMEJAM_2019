@@ -11,22 +11,26 @@ func filter_array(arr:Array, v):
 		if arr[index] == v :
 			result.append(index)
 	return result		
-	
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#_idleWalk();
-	pass # Replace with function body.
-
+	pass
+	
 var idle_walk_timer = 0
 
 func _physics_process(delta):
 	
 	var target = choose_target_in_room()
-	
+
 	if target:
 		var speed = choose_walk_speed(target)
-		move_to_target(target, speed)
+		var dist = global_position.distance_to(target.global_position)		
+		
+		if dist < 17:
+			attack(target)	
+		else:
+			move_to_target(target, speed)
 	else: 	
 		idle_walk_timer += delta		
 		idle_walk()
@@ -61,51 +65,67 @@ func scan_for_targets(n):
 	for target in targets:
 		var dist = Vector2(target.global_position.x - global_position.x,target.global_position.y - global_position.y).length() 
 		if dist < n :
-			targeted.append(target)
+			var space_state = get_world_2d().direct_space_state
+			var result = space_state.intersect_ray(global_position, target.global_position, [self], 6)
+			if not result:
+				targeted.append(target)
 	return targeted 	
 	
 func choose_target_in_room():
 	# Scan for targets in n range
 	var in_range = 80
 	var targets = scan_for_targets(in_range)
-
+	
 	#if there is a target in range decide on target
 	if targets :
-
 		# if its only one target, return this target
 		if targets.size() == 1 :
 			return targets[0]
 		else :	
-			# if there is more than one target in range, 
-			var target = {}
-			
+			# if there is more than one target in range, 			
 			var target_types = []
 			var target_distances = []
 			#iterate over and test for character type
 			for elem in targets:
-				var distance = elem.position.x + elem.position.y
+				var distance = global_position.distance_to(elem.global_position)	
 				target_distances.append(distance)
 				if not target_types.has(elem.character_type):
 					target_types.append(elem.character_type)
 			# a) all targets are same? -> choose nearest target
-			if target_types.size() == 1 :
-				var target_distances_min = target_distances.min()
-				var index_count = target_distances.count(target_distances_min)
+			
+			var target_distances_min = target_distances.min()
+			var target_types_min = target_types.min()
+			var types_count = target_types.count(target_types_min)
+			var index_count = target_distances.count(target_distances_min)
+			
+			if target_types.size() == 1 || target_distances_min < 20 :
 				if index_count == 1 :
 					var index_target = target_distances.find(target_distances_min)
 					return targets[index_target]
 				else :
 					# if still same, decide randomly
 					var rest_targets = filter_array(target_distances, target_distances_min)
-					return targets[randi()%rest_targets.size()]
+					return targets[rest_targets[randi()%rest_targets.size()]]
 						
-			else :		
+			else :	
+				#follow the character with the smallest priority	
+				if types_count == 1 :
+					var index_target = target_types.find(target_types_min)
+					return targets[index_target]
+				else :
+					var rest_targets_index = filter_array(target_types, target_types_min)	
+					var rest_targets_distance = []
+					for i in rest_targets_index:
+						rest_targets_distance.append(target_distances[i])
+					var rest_index = rest_targets_distance.find(rest_targets_distance.min())	
+					return targets[rest_index]
+					
 			# b) if targets are different choose target with highest priority
 				return targets[randi()%targets.size()]
 				# priority is a value given by distance and importance
 				# enemies that are in striking range should always be targeted (defense line)
 				# enemies that are naked should always be targeted (interest)	
-			return target
+			
 	else:
 		 return null
 
@@ -126,7 +146,7 @@ func idle_walk():
 		move(idle_speed, 'RIGHT')
 	else :
 		move(idle_speed, 'LEFT')
-	if idle_walk_timer <= 6:
+	if idle_walk_timer >= 6:
 		idle_walk_timer = 0;
 
 var direction = 'right'
@@ -137,7 +157,7 @@ func move(speed, dir):
 	var diagonal_speed = round(speed / 1.414)
 	var base_speed = 8.0
 	
-	if dir == 'RIGHTDOWN':
+	if dir == 'RIGHTUP':
 		move.x += 1 * diagonal_speed
 		move.y -= 1 * diagonal_speed
 		direction = 'right'
@@ -190,33 +210,32 @@ func turn_to_target(target):
 	else :
 		flip_sprite($Orc/Sprite, 'left')	
 	
-func attack():
-	#use attack animation
-	$Orc/AnimationPlayer.play(\"Attack\")
+signal attacked_player
 	
-func seeTarget():
-	pass		
+func attack(target):
+	#use attack animation
+	$Orc/AnimationPlayer.playback_speed = 1
+	$Orc/AnimationPlayer.play(\"Attack\")
+	emit_signal('attacked_player', target.player, 'Orc_Attack') 	
 	
 func idle():
-	pass
-	
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-"
+	$Orc/AnimationPlayer.play(\"Idle\")
+	"
 
 [sub_resource type="CapsuleShape2D" id=2]
 radius = 7.58712
-height = 15.681
+height = 2.03262
 
 [node name="Enemy_Orc" type="KinematicBody2D" groups=[
 "Enemies",
 ]]
 script = SubResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0.270554, 1.48804 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
+"Enemies",
+]]
+position = Vector2( -0.582023, -0.0466013 )
 shape = SubResource( 2 )
 
 [node name="Orc" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0.0852547, 0.0852623 )
