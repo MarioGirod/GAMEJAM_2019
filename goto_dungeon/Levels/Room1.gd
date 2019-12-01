@@ -25,7 +25,6 @@ func lever_called(lever):
 
 func lever_left(lever):
 	levers_called.erase(lever)
-	print(levers_called.size())
 
 func _on_Sword_item_touched(item):
 	self.remove_child(blocker0)
