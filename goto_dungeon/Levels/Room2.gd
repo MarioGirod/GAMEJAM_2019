@@ -23,3 +23,4 @@ func lever_called(lever):
 
 func lever_left(lever):
 	levers_called.erase(lever)
+
