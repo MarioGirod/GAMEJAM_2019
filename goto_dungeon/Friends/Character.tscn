@@ -16,9 +16,6 @@ var character_item: KinematicBody2D = null
 var look_direction = Vector2.RIGHT
 
 func _ready():
-	pass 
-
-func _ready():
 	var color = get_color();
 	self.get_node(\"Highlighter\").modulate = color;
 
@@ -139,7 +136,7 @@ shape = SubResource( 2 )
 position = Vector2( 0.530334, -8.66206 )
 
 [node name="Highlighter" type="Sprite" parent="."]
-position = Vector2( 0.971386, 9.20495 )
-scale = Vector2( 0.206709, 0.0615164 )
+position = Vector2( 1.20352, 8.62366 )
+scale = Vector2( 0.299722, 0.0891969 )
 texture = ExtResource( 2 )
 hframes = 4
