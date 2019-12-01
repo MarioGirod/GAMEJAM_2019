@@ -4,7 +4,7 @@
 [ext_resource path="res://Sprites/grave.png" type="Texture" id=2]
 
 [sub_resource type="Gradient" id=1]
-offsets = PoolRealArray( 1.61149e-43, 0.585034 )
+offsets = PoolRealArray( 1.61149e-043, 0.585034 )
 colors = PoolColorArray( 0.027451, 0.188235, 0, 1, 0, 0.380392, 0.0235294, 1 )
 
 [sub_resource type="GradientTexture" id=2]
@@ -14,7 +14,7 @@ gradient = SubResource( 1 )
 script = ExtResource( 1 )
 
 [node name="Polygon2D" type="Polygon2D" parent="."]
-position = Vector2( -405.5, -295.336 )
+position = Vector2( -404.55, -296.286 )
 scale = Vector2( 24.9739, 32.0809 )
 z_index = -1
 texture = SubResource( 2 )

@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Items/Item.gd" type="Script" id=1]
 [ext_resource path="res://CharacterScenes/FemaleWarrior.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Items/Sword.atlastex" type="Texture" id=3]
+[ext_resource path="res://Particles/Pixels_rise.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Items/Sword.atlastex" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 6.0
@@ -14,9 +15,12 @@ collision_mask = 2
 script = ExtResource( 1 )
 character_scene = ExtResource( 2 )
 
+[node name="Pixels_rise" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0, 0 )
+
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 0, -5 )
-texture = ExtResource( 3 )
+texture = ExtResource( 4 )
 
 [node name="Area2D" type="Area2D" parent="."]
 editor/display_folded = true
