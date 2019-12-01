@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://CharacterScenes/NakedGuy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/arrows.png" type="Texture" id=2]
 [ext_resource path="res://Particles/Stars.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Sounds/magic-wardrobe.wav" type="AudioStream" id=4]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -104,7 +105,7 @@ func get_color():
 
 func change_character(node: Node2D, type):
 	var before = $NakedGuy
-
+	$sound.play()
 	node.name = \"NakedGuy\"
 	node.transform = before.transform
 	node.get_node(\"Sprite\").flip_h = before.get_node(\"Sprite\").flip_h
@@ -215,3 +216,6 @@ scale = Vector2( 0.5, 0.5 )
 emitting = false
 lifetime = 0.33
 explosiveness = 1.0
+
+[node name="sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
