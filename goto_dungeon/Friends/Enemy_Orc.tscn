@@ -76,7 +76,7 @@ func scan_for_targets(n):
 	
 func choose_target_in_room():
 	# Scan for targets in n range
-	var in_range = 80
+	var in_range = 160
 	var targets = scan_for_targets(in_range)
 	
 	#if there is a target in range decide on target
