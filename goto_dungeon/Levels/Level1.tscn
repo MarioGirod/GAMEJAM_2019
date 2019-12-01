@@ -119,7 +119,7 @@ position = Vector2( 1024, 0 )
 position = Vector2( 264.333, 135.359 )
 [connection signal="item_touched" from="YSort/Sword" to="Room1" method="_on_Sword_item_touched"]
 [connection signal="dead" from="Room2/Enemy_Orc" to="Room2" method="orc_ded"]
-[connection signal="dead" from="Room2/Enemy_Orc2" to="." method="orc_ded"]
+[connection signal="dead" from="Room2/Enemy_Orc2" to="Room2" method="orc_ded"]
 [connection signal="dead" from="Room2/Enemy_Orc3" to="Room2" method="orc_ded"]
 
 [editable path="Tilemaps"]

@@ -5,11 +5,12 @@ onready var blocker1 = get_node("Blocker1")
 onready var blocker2 = get_node("Blocker2")
 
 var levers_called = []
+var orcs_ded = 0
 
 func orc_ded():
-	var orcs = get_tree().get_nodes_in_group("Enemies")
-	var root = get_parent()
-	if orcs.size() == 0:
+	print("orcded")
+	orcs_ded += 1
+	if orcs_ded >= 3:
 		self.remove_child(blocker0)
 		self.remove_child(blocker1)
 		self.remove_child(blocker2)
