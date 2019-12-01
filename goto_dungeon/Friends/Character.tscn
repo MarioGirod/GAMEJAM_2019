@@ -78,6 +78,7 @@ func throw_character_item():
 		var dir = look_direction
 		node.throw_it(self, from, dir)
 
+
 func get_look_direction(vec: Vector2):
 	if vec.x < 0: return Vector2.LEFT
 	if vec.x > 0: return Vector2.RIGHT
@@ -104,13 +105,13 @@ func get_move_vec_for_player(player):
 		self.get_node(\"Highlighter\").frame = 0
 	if Input.is_action_pressed(player + \"_down\"):
 		move_vec += Vector2.DOWN
-		self.get_node(\"Highlighter\").frame = 1		
+		self.get_node(\"Highlighter\").frame = 1
 	if Input.is_action_pressed(player + \"_left\"):
 		move_vec += Vector2.LEFT
-		self.get_node(\"Highlighter\").frame = 2		
+		self.get_node(\"Highlighter\").frame = 2
 	if Input.is_action_pressed(player + \"_right\"):
 		move_vec += Vector2.RIGHT
-		self.get_node(\"Highlighter\").frame = 3		
+		self.get_node(\"Highlighter\").frame = 3
 	move_vec = move_vec.normalized()
 	
 	# test death
