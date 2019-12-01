@@ -15,6 +15,10 @@ var death_scene_path = \"res://Death.tscn\"
 var character_item: KinematicBody2D = null
 var look_direction = Vector2.RIGHT
 
+var attack_cooldown = 1
+var current_attack_cooldown = 0
+var is_attacking = false
+
 func _ready():
 	var color = get_color();
 	self.get_node(\"Highlighter\").modulate = color;
@@ -36,7 +40,13 @@ func _on_attacked_player(target, attack):
 
 func _physics_process(delta):
 	if die_active:
-		pass
+		return
+	if Input.is_action_just_pressed(player+\"_attack\") and current_attack_cooldown == 0:
+		if character_type != CharacterType.NAKED:
+			is_attacking = true
+			current_attack_cooldown = attack_cooldown
+	if is_attacking:
+		process_attack(delta)
 	elif input_drop_character():
 		choose_animation(Vector2.ZERO)
 	else:
@@ -49,26 +59,26 @@ func _physics_process(delta):
 var die_active = false
 
 func die():
-	tumble_cancel()
-	die_active = true
-	var player = $NakedGuy/AnimationPlayer
-	player.play(\"Die\")
-	yield(player, \"animation_finished\")
-	globals.switch_scene(death_scene_path)
+       tumble_cancel()
+       die_active = true
+       var player = $NakedGuy/AnimationPlayer
+       player.play(\"Die\")
+       yield(player, \"animation_finished\")
+       globals.switch_scene(death_scene_path)
 
 var tumble_active = false
 
 func tumble():
-	tumble_active = true
-	var player = $NakedGuy/AnimationPlayer
-	player.play(\"Idle\")
-	$NakedGuy/Sprite.modulate = Color.yellow
-	yield(get_tree().create_timer(1), \"timeout\")
-	tumble_active = false
+       tumble_active = true
+       var player = $NakedGuy/AnimationPlayer
+       player.play(\"Idle\")
+       $NakedGuy/Sprite.modulate = Color.yellow
+       yield(get_tree().create_timer(1), \"timeout\")
+       tumble_active = false
 
 func tumble_cancel():
-	tumble_active = false
-	$NakedGuy/Sprite.modulate = Color.white
+       tumble_active = false
+       $NakedGuy/Sprite.modulate = Color.white
 
 # called from items too
 func change_character_with_item(item: KinematicBody2D, scene: PackedScene, type):
@@ -105,6 +115,15 @@ func input_drop_character():
 		throw_character_item()
 		return true
 	return false
+	
+func process_attack(delta):
+	current_attack_cooldown -= delta
+	if current_attack_cooldown < 0:
+		current_attack_cooldown = 0
+		is_attacking = false
+	if character_type == CharacterType.NAKED: return
+	print(current_attack_cooldown)
+	$NakedGuy/AnimationPlayer.play(\"Attack\")
 
 func drop_character():
 	var node = naked_guy.instance()
@@ -156,8 +175,8 @@ func get_move_vec_for_player(player):
 	move_vec = move_vec.normalized()
 	
 	# test death
-	if Input.is_action_just_pressed('ui_select'):
-		globals.switch_scene(death_scene_path)
+	#if Input.is_action_just_pressed('ui_select'):
+		#globals.switch_scene(death_scene_path)
 		#pass
 	return move_vec
 	
