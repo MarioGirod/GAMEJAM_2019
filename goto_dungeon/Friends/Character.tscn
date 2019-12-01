@@ -211,5 +211,6 @@ hframes = 4
 [node name="Stars" parent="." instance=ExtResource( 3 )]
 position = Vector2( 0.530334, -20 )
 scale = Vector2( 0.5, 0.5 )
+emitting = false
 lifetime = 0.33
 explosiveness = 1.0
