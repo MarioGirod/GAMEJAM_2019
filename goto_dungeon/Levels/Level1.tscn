@@ -5,10 +5,10 @@
 [ext_resource path="res://TilesetScenes/Tileset.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Friends/Character.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Items/Sword.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Items/Dagger.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Levels/Room1.gd" type="Script" id=7]
-[ext_resource path="res://Levels/Objects/Blocker.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Levels/Objects/Lever.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Levels/Room1.gd" type="Script" id=6]
+[ext_resource path="res://Levels/Objects/Blocker.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Levels/Objects/Lever.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Friends/Enemy_Orc.tscn" type="PackedScene" id=9]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 1 )
@@ -48,50 +48,56 @@ player = "p3"
 [node name="Sword" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 140, 110 )
 
-[node name="Dagger" parent="YSort" instance=ExtResource( 6 )]
-position = Vector2( 130, 190 )
-
 [node name="Room1" type="Node2D" parent="."]
-script = ExtResource( 7 )
+script = ExtResource( 6 )
 
-[node name="Blocker0" parent="Room1" instance=ExtResource( 8 )]
+[node name="Blocker0" parent="Room1" instance=ExtResource( 7 )]
 position = Vector2( 488.196, 95.8423 )
 
-[node name="Blocker1" parent="Room1" instance=ExtResource( 8 )]
+[node name="Blocker1" parent="Room1" instance=ExtResource( 7 )]
 position = Vector2( 488.196, 223.981 )
 
-[node name="Blocker2" parent="Room1" instance=ExtResource( 8 )]
+[node name="Blocker2" parent="Room1" instance=ExtResource( 7 )]
 position = Vector2( 488.054, 160.207 )
 
-[node name="Lever" parent="Room1" instance=ExtResource( 9 )]
+[node name="Lever" parent="Room1" instance=ExtResource( 8 )]
 position = Vector2( 504.697, 100.3 )
 
-[node name="Lever2" parent="Room1" instance=ExtResource( 9 )]
+[node name="Lever2" parent="Room1" instance=ExtResource( 8 )]
 position = Vector2( 504.511, 163.926 )
 
-[node name="Lever3" parent="Room1" instance=ExtResource( 9 )]
+[node name="Lever3" parent="Room1" instance=ExtResource( 8 )]
 position = Vector2( 504.68, 227.638 )
 
-[node name="Blocker3" parent="Room1" instance=ExtResource( 8 )]
+[node name="Blocker3" parent="Room1" instance=ExtResource( 7 )]
 position = Vector2( 525.136, 96.2045 )
 
-[node name="Blocker4" parent="Room1" instance=ExtResource( 8 )]
+[node name="Blocker4" parent="Room1" instance=ExtResource( 7 )]
 position = Vector2( 526.196, 159.928 )
 
-[node name="Blocker5" parent="Room1" instance=ExtResource( 8 )]
+[node name="Blocker5" parent="Room1" instance=ExtResource( 7 )]
 position = Vector2( 525.887, 223.979 )
 
 [node name="Room2" type="Node2D" parent="."]
 position = Vector2( 512, 0 )
 
-[node name="Blocker0" parent="Room2" instance=ExtResource( 8 )]
+[node name="Blocker0" parent="Room2" instance=ExtResource( 7 )]
 position = Vector2( 487.99, 96.0346 )
 
-[node name="Blocker1" parent="Room2" instance=ExtResource( 8 )]
+[node name="Blocker1" parent="Room2" instance=ExtResource( 7 )]
 position = Vector2( 487.009, 160.12 )
 
-[node name="Blocker2" parent="Room2" instance=ExtResource( 8 )]
+[node name="Blocker2" parent="Room2" instance=ExtResource( 7 )]
 position = Vector2( 487.963, 224.042 )
+
+[node name="Enemy_Orc" parent="Room2" instance=ExtResource( 9 )]
+position = Vector2( 252.741, 86.8364 )
+
+[node name="Enemy_Orc2" parent="Room2" instance=ExtResource( 9 )]
+position = Vector2( 284.708, 166.195 )
+
+[node name="Enemy_Orc3" parent="Room2" instance=ExtResource( 9 )]
+position = Vector2( 242.288, 232.412 )
 
 [node name="Room3" type="Node2D" parent="."]
 position = Vector2( 1024, 0 )
