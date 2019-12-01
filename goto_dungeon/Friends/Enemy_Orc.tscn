@@ -133,11 +133,11 @@ func choose_target_in_room():
 		 return null
 
 func choose_walk_speed(target):
-	var speed = 8
+	var speed = 12
 	if target.character_type == CharacterType.NAKED :
-		speed = 16		
+		speed = 24		
 	elif target.character_type == CharacterType.DIVERS :
-		speed = 6
+		speed = 10
 				
 	return speed
 
