@@ -22,3 +22,6 @@ func _on_Lever_body_entered(body):
 
 func _on_Lever_body_exited(body):
 	$Sprite.frame = 0
+	var room = get_parent()
+	if room.has_method("lever_left"):
+		room.lever_left(self)
