@@ -215,19 +215,36 @@ signal attacked_player
 
 var attack_target = null
 var attack_active = false
+var attack_cooldown = 1.5
+onready var attack_cooldown_timer = attack_timer()
+
+func attack_timer():
+	var timer = Timer.new()
+	timer.wait_time = attack_cooldown
+	timer.one_shot = true
+	add_child(timer)
+	return timer
 
 func attack(target):
-	if attack_active:
-		if not $Orc/AnimationPlayer.is_playing():
-			attack_active = false
-			attack_target = null
-			emit_signal('attacked_player', target, 'Orc_Attack') 
-	else:
+	if not attack_cooldown_timer.time_left:
 		attack_active = true
 		attack_target = target
-		$Orc/AnimationPlayer.playback_speed = 2
-		$Orc/AnimationPlayer.play(\"Attack\")
-	
+		
+		var player = $Orc/AnimationPlayer
+		player.playback_speed = 2
+		player.animation_set_next(\"Attack\", \"Idle\")
+		player.play(\"Attack\")
+		
+		attack_cooldown_timer.start()
+		
+		var ret = yield(player, \"animation_changed\")
+		
+		attack_active = false
+		attack_target = null
+		emit_signal('attacked_player', target, 'Orc_Attack')
+
+		yield(attack_cooldown_timer, \"timeout\")
+
 func idle():
 	$Orc/AnimationPlayer.play(\"Idle\")
 	"

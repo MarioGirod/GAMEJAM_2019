@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://CharacterScenes/NakedGuy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/arrows.png" type="Texture" id=2]
+[ext_resource path="res://Particles/Stars.tscn" type="PackedScene" id=3]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -39,7 +40,7 @@ func _on_attacked_player(target, attack):
 		pass
 
 func _physics_process(delta):
-	if die_active:
+	if die_active or tumble_active:
 		return
 	if Input.is_action_just_pressed(player+\"_attack\") and current_attack_cooldown == 0:
 		if character_type != CharacterType.NAKED:
@@ -47,6 +48,7 @@ func _physics_process(delta):
 			current_attack_cooldown = attack_cooldown
 	if is_attacking:
 		process_attack(delta)
+
 	elif input_drop_character():
 		choose_animation(Vector2.ZERO)
 	else:
@@ -69,16 +71,18 @@ func die():
 var tumble_active = false
 
 func tumble():
-       tumble_active = true
-       var player = $NakedGuy/AnimationPlayer
-       player.play(\"Idle\")
-       $NakedGuy/Sprite.modulate = Color.yellow
-       yield(get_tree().create_timer(1), \"timeout\")
-       tumble_active = false
+	tumble_active = true
+	var player = $NakedGuy/AnimationPlayer
+	player.play(\"Idle\")
+	$Stars.emitting = true
+	$Stars.restart()
+	yield(get_tree().create_timer(1), \"timeout\")
+	tumble_cancel()
 
 func tumble_cancel():
-       tumble_active = false
-       $NakedGuy/Sprite.modulate = Color.white
+	tumble_active = false
+	$Stars.emitting = false
+
 
 # called from items too
 func change_character_with_item(item: KinematicBody2D, scene: PackedScene, type):
@@ -203,3 +207,9 @@ position = Vector2( 1.20352, 8.62366 )
 scale = Vector2( 0.299722, 0.0891969 )
 texture = ExtResource( 2 )
 hframes = 4
+
+[node name="Stars" parent="." instance=ExtResource( 3 )]
+position = Vector2( 0.530334, -20 )
+scale = Vector2( 0.5, 0.5 )
+lifetime = 0.33
+explosiveness = 1.0
