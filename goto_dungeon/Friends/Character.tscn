@@ -62,9 +62,9 @@ func throw_character_item():
 		var node = character_item.duplicate()
 		character_item = null
 		get_parent().add_child(node)
-		var a = (position / 16).round()
-		var b = (a + 3 * look_direction) * 16
-		node.position = b
+		var from = position + Vector2.UP * 8
+		var dir = look_direction
+		node.throw_it(self, from, dir)
 
 func get_look_direction(vec: Vector2):
 	if vec.x < 0: return Vector2.LEFT
