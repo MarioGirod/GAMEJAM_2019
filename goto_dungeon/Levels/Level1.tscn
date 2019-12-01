@@ -31,7 +31,6 @@ tile_data = PoolIntArray( 0, 0, 1, 1, 0, 10, 2, 0, 9, 3, 0, 9, 4, 0, 9, 5, 0, 10
 tile_data = PoolIntArray( 524322, 0, 0, 524323, 0, 65536, 524324, 0, 65536, 524325, 0, 65537, 524326, 0, 65537, 524327, 0, 65536, 524328, 0, 65536, 524329, 0, 65537, 524330, 0, 65537, 524331, 0, 0, 524332, 0, 1, 524333, 0, 0, 524334, 0, 0, 524335, 0, 65536, 524336, 0, 0, 524337, 0, 65537, 524338, 0, 1, 524339, 0, 0, 524340, 0, 65537, 524341, 0, 1, 524342, 0, 1, 524343, 0, 0, 524344, 0, 65536, 524345, 0, 0, 524346, 0, 1, 524347, 0, 1, 524348, 0, 0, 524349, 0, 0, 786466, 0, 0, 786467, 0, 1, 786468, 0, 65536, 786469, 0, 65537, 786470, 0, 0, 786471, 0, 1, 786472, 0, 0, 786473, 0, 1, 786474, 0, 65537, 786475, 0, 65536, 786476, 0, 65536, 786477, 0, 65536, 786478, 0, 65537, 786479, 0, 65536, 786480, 0, 1, 786481, 0, 65536, 786482, 0, 1, 786483, 0, 65537, 786484, 0, 1, 786485, 0, 65536, 786486, 0, 0, 786487, 0, 65537, 786488, 0, 1, 786489, 0, 65536, 786490, 0, 0, 786491, 0, 65536, 786492, 0, 0, 786493, 0, 0 )
 
 [node name="YSort" type="YSort" parent="."]
-editor/display_folded = true
 
 [node name="Character" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 229.129, 145.505 )
@@ -39,6 +38,10 @@ position = Vector2( 229.129, 145.505 )
 [node name="Character2" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 185.402, 159.777 )
 player = "p2"
+
+[node name="Character3" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( 279, 140 )
+player = "p3"
 
 [node name="Sword" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 140, 110 )
@@ -53,6 +56,7 @@ script = ExtResource( 7 )
 position = Vector2( 496.706, 101.222 )
 
 [node name="Room2" type="Node2D" parent="."]
+editor/display_folded = true
 position = Vector2( 512, 0 )
 
 [node name="Lever" parent="Room2" instance=ExtResource( 8 )]
