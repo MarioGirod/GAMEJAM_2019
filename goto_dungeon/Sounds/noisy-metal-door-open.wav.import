@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/noisy-metal-door-open.wav-c095a0c8f2c141d75844ef0a206837c2.sample"
+
+[deps]
+
+source_file="res://Sounds/noisy-metal-door-open.wav"
+dest_files=[ "res://.import/noisy-metal-door-open.wav-c095a0c8f2c141d75844ef0a206837c2.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

@@ -6,6 +6,10 @@ var level_9_path = "res://Friends/Enemy_Orc_Test.tscn"
 var font = preload("res://assets/RobotoBold120.tres")
 
 
+func _ready():
+	$sound.play()
+
+
 func _draw():
 	font.size = 36
 	draw_string(font, Vector2(40,550), "Welcome to the dungeon! Press a number to select a level.", Color(1,1,1)) 

@@ -14,6 +14,7 @@ func _ready():
 
 
 func _on_Lever_body_entered(body):
+	$sound.play()
 	$Sprite.frame = 1
 	var room = get_parent()
 	if room.has_method("lever_called"):

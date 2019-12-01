@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Start.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/start_screen.png" type="Texture" id=2]
+[ext_resource path="res://Sounds/bustedearlobes.wav" type="AudioStream" id=3]
 
 [sub_resource type="Gradient" id=1]
 offsets = PoolRealArray( 0.437931, 1 )
@@ -27,3 +28,7 @@ z_index = -1
 texture = SubResource( 2 )
 texture_scale = Vector2( 50, 1 )
 polygon = PoolVector2Array( 0.00908279, 0.891641, 76.3618, 0.757973, 76.3618, 39.5216, 0.00907898, 39.5216 )
+
+[node name="sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+volume_db = -15.408
