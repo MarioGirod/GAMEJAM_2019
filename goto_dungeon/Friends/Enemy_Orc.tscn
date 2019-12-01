@@ -278,6 +278,8 @@ height = 2.03262
 [node name="Enemy_Orc" type="KinematicBody2D" groups=[
 "Enemies",
 ]]
+collision_layer = 16
+collision_mask = 23
 script = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=[
