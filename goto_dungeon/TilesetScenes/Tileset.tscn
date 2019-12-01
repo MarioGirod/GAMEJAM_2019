@@ -899,6 +899,8 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 z_index = -2
 tile_set = SubResource( 77 )
 cell_size = Vector2( 16, 16 )
+collision_layer = 2
+collision_mask = 31
 format = 1
 tile_data = PoolIntArray( 0, 655392, 0, 1, 65536, 0, 2, 8, 0, 3, 655388, 0, 4, 65560, 0, 5, 655390, 0, 8, 1114141, 0, 65536, 720932, 0, 65537, 720918, 0, 65539, 720924, 0, 65540, 720916, 0, 65541, 720926, 0, 131073, 1048612, 0, 131081, 1048600, 0 )
 
@@ -906,4 +908,6 @@ tile_data = PoolIntArray( 0, 655392, 0, 1, 65536, 0, 2, 8, 0, 3, 655388, 0, 4, 6
 z_index = -1
 tile_set = SubResource( 78 )
 cell_size = Vector2( 16, 16 )
+collision_layer = 4
+collision_mask = 23
 format = 1

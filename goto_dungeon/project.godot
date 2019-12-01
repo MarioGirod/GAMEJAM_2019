@@ -153,6 +153,14 @@ p3_drop={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Characters"
+2d_physics/layer_2="Walls"
+2d_physics/layer_3="Decoration"
+2d_physics/layer_4="Items"
+2d_physics/layer_5="Enemies"
+
 [physics]
 
 2d/default_gravity=0

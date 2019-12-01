@@ -110,6 +110,7 @@ radius = 7.0
 height = 0.718109
 
 [node name="Character" type="KinematicBody2D"]
+collision_mask = 23
 script = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
