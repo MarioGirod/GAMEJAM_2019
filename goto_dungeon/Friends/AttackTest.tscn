@@ -17,3 +17,4 @@ position = Vector2( -14.3275, -10 )
 
 [node name="Character" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( -50, 0.418121 )
+player = "p3"

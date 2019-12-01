@@ -35,7 +35,7 @@ func _on_attacked_player(target, attack):
 		pass
 
 func _physics_process(delta):
-	if die_active:
+	if tumble_active or die_active:
 		pass
 	elif input_drop_character():
 		choose_animation(Vector2.ZERO)
@@ -64,7 +64,7 @@ func tumble():
 	player.play(\"Idle\")
 	$NakedGuy/Sprite.modulate = Color.yellow
 	yield(get_tree().create_timer(1), \"timeout\")
-	tumble_active = false
+	tumble_cancel()
 
 func tumble_cancel():
 	tumble_active = false
