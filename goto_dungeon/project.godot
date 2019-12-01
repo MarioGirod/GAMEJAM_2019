@@ -20,7 +20,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Dungeon_generator"
+config/name="UnderDungeon"
 run/main_scene="res://Start.tscn"
 
 [autoload]

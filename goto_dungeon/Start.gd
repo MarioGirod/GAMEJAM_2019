@@ -8,7 +8,7 @@ var font = preload("res://assets/RobotoBold120.tres")
 
 func _draw():
 	font.size = 36
-	draw_string(font, Vector2(40,550), "Welcome to the dungon! Press a number to select a level.", Color(1,1,1)) 
+	draw_string(font, Vector2(40,550), "Welcome to the dungeon! Press a number to select a level.", Color(1,1,1)) 
 
 
 func _input(event):
