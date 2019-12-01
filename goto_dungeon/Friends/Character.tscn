@@ -23,8 +23,16 @@ func _ready():
 		node.connect(\"attacked_player\", self, \"_on_attacked_player\") 
 
 func _on_attacked_player(target, attack):
-	if target == self and not die_active:
+	if target != self:
+		pass
+	elif not tumble_active and not die_active:
+		tumble()
+	elif tumble_active and not die_active:
 		die()
+	elif not tumble_active and die_active:
+		pass
+	elif tumble_active and die_active:
+		pass
 
 func _physics_process(delta):
 	if die_active:
@@ -41,11 +49,26 @@ func _physics_process(delta):
 var die_active = false
 
 func die():
+	tumble_cancel()
 	die_active = true
 	var player = $NakedGuy/AnimationPlayer
 	player.play(\"Die\")
 	yield(player, \"animation_finished\")
 	globals.switch_scene(death_scene_path)
+
+var tumble_active = false
+
+func tumble():
+	tumble_active = true
+	var player = $NakedGuy/AnimationPlayer
+	player.play(\"Idle\")
+	$NakedGuy/Sprite.modulate = Color.yellow
+	yield(get_tree().create_timer(1), \"timeout\")
+	tumble_active = false
+
+func tumble_cancel():
+	tumble_active = false
+	$NakedGuy/Sprite.modulate = Color.white
 
 # called from items too
 func change_character_with_item(item: KinematicBody2D, scene: PackedScene, type):
