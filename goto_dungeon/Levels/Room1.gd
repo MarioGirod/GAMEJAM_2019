@@ -12,7 +12,6 @@ onready var blocker5 = get_node("Blocker5")
 
 func lever_called(lever):
 	levers_called.append(lever)
-	print(levers_called.size())
 	if levers_called.size() == 3:
 		var root = get_parent()
 		if root.has_method("room_complete"):
