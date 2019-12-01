@@ -43,13 +43,13 @@ func _on_attacked_player(target, attack):
 func _physics_process(delta):
 	if die_active or tumble_active:
 		return
-	if Input.is_action_just_pressed(player+\"_attack\") and current_attack_cooldown == 0:
-		if character_type != CharacterType.NAKED:
-			is_attacking = true
-			current_attack_cooldown = attack_cooldown
-	if is_attacking:
-		process_attack(delta)
-
+	
+	current_attack_cooldown -= delta
+	if Input.is_action_just_pressed(player+\"_attack\"):
+		if current_attack_cooldown <= 0:
+			attack()
+	elif is_attacking:
+		pass
 	elif input_drop_character():
 		choose_animation(Vector2.ZERO)
 	else:
@@ -62,18 +62,20 @@ func _physics_process(delta):
 var die_active = false
 
 func die():
-       tumble_cancel()
-       die_active = true
-       var player = $NakedGuy/AnimationPlayer
-       player.play(\"Die\")
-       yield(player, \"animation_finished\")
-       globals.switch_scene(death_scene_path)
+	tumble_cancel()
+	die_active = true
+	var player = $NakedGuy/AnimationPlayer
+	player.playback_speed = 1
+	player.play(\"Die\")
+	yield(player, \"animation_finished\")
+	globals.switch_scene(death_scene_path)
 
 var tumble_active = false
 
 func tumble():
 	tumble_active = true
 	var player = $NakedGuy/AnimationPlayer
+	player.playback_speed = 1
 	player.play(\"Idle\")
 	$Stars.emitting = true
 	$Stars.restart()
@@ -120,15 +122,40 @@ func input_drop_character():
 		throw_character_item()
 		return true
 	return false
-	
-func process_attack(delta):
-	current_attack_cooldown -= delta
-	if current_attack_cooldown < 0:
-		current_attack_cooldown = 0
+
+export var attack_range = 32
+
+func attack():
+	if character_type != CharacterType.NAKED:
+		is_attacking = true
+		current_attack_cooldown = attack_cooldown
+		var player = $NakedGuy/AnimationPlayer
+		player.playback_speed = 3
+		player.play(\"Attack\")
+		yield(player, \"animation_finished\")
+		
 		is_attacking = false
-	if character_type == CharacterType.NAKED: return
-	print(current_attack_cooldown)
-	$NakedGuy/AnimationPlayer.play(\"Attack\")
+		if tumble_active or die_active:
+			return
+		
+		var target = cast_attack_ray()
+		if target:
+			print(\"target.on_attacked\")
+			target.on_attacked()
+
+func cast_attack_ray():
+	print(\"cast_attack_ray\")
+	var space_state = get_world_2d().direct_space_state
+	var result = space_state.intersect_ray(
+		global_position,
+		global_position + attack_range * look_direction,
+		[self],
+		16 # monsters
+	)
+	print(result)
+	if result and result.collider.has_method(\"on_attacked\"):
+		return result.collider
+	return null
 
 func drop_character():
 	var node = naked_guy.instance()
@@ -152,6 +179,7 @@ func get_look_direction(vec: Vector2):
 	return look_direction
 
 func choose_animation(vec: Vector2):
+	$NakedGuy/AnimationPlayer.playback_speed = 1
 	if vec.x == 0 and vec.y == 0:
 		$NakedGuy/AnimationPlayer.play(\"Idle\")
 	else:

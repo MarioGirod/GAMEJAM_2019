@@ -20,7 +20,9 @@ func _ready():
 var idle_walk_timer = 0
 
 func _physics_process(delta):
-	if attack_active:
+	if die_active:
+		pass
+	elif attack_active:
 		attack(attack_target)
 	else:
 		var target = choose_target_in_room()
@@ -245,7 +247,27 @@ func attack(target):
 
 		yield(attack_cooldown_timer, \"timeout\")
 
+func on_attacked():
+	die()
+
+signal dead
+var die_active = false
+var is_dead = false
+
+func die():
+	if is_dead: return
+
+	die_active = true
+	var player = $Orc/AnimationPlayer
+	player.playback_speed = 1
+	player.play(\"Die\")
+	yield(player, \"animation_finished\")
+	is_dead = true
+
+	emit_signal(\"dead\")
+
 func idle():
+	$Orc/AnimationPlayer.playback_speed = 1
 	$Orc/AnimationPlayer.play(\"Idle\")
 	"
 
