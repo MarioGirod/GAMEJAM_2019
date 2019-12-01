@@ -30,6 +30,7 @@ func throw_it(exclude, from: Vector2, dir: Vector2):
 	throw_dir = dir
 	throw_time = 0.33
 	throw_exclude = exclude
+	throw_speed = throw_base_speed
 
 func _physics_process(delta):
 	if throw_time > 0:
