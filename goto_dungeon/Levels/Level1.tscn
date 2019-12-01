@@ -111,6 +111,15 @@ position = Vector2( 503.679, 164.844 )
 [node name="Lever3" parent="Room2" instance=ExtResource( 8 )]
 position = Vector2( 503.679, 227.782 )
 
+[node name="Blocker3" parent="Room2" instance=ExtResource( 7 )]
+position = Vector2( 520.404, 160.443 )
+
+[node name="Blocker4" parent="Room2" instance=ExtResource( 7 )]
+position = Vector2( 520.844, 224.701 )
+
+[node name="Blocker5" parent="Room2" instance=ExtResource( 7 )]
+position = Vector2( 520.404, 97.5044 )
+
 [node name="Room3" type="Node2D" parent="."]
 editor/display_folded = true
 position = Vector2( 1024, 0 )

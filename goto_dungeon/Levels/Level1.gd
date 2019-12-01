@@ -22,7 +22,3 @@ func room_complete(room):
 		camera_follower.set_position(room3.get_position())
 		#room1.remove_child(camera)
 		#room2.add_child(camera)
-
-
-func orc_ded():
-	pass # Replace with function body.
