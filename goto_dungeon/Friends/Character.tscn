@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://CharacterScenes/NakedGuy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/arrows.png" type="Texture" id=2]
-[ext_resource path="res://Particles/Stars.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Sounds/magic-wardrobe.wav" type="AudioStream" id=4]
+[ext_resource path="res://Friends/Highlighter.gd" type="Script" id=3]
+[ext_resource path="res://Particles/Stars.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Sounds/magic-wardrobe.wav" type="AudioStream" id=5]
 
 [sub_resource type="GDScript" id=1]
 script/source = "extends KinematicBody2D
@@ -22,8 +23,6 @@ var current_attack_cooldown = 0
 var is_attacking = false
 
 func _ready():
-	var color = get_color();
-	self.get_node(\"Highlighter\").modulate = color;
 	var attacker_nodes = get_tree().get_nodes_in_group('Enemies')
 	for node in attacker_nodes:
 		node.connect(\"attacked_player\", self, \"_on_attacked_player\") 
@@ -95,15 +94,7 @@ func change_character_with_item(item: KinematicBody2D, scene: PackedScene, type)
 		var node = scene.instance()
 		change_character(node, type)
 
-func get_color():
-	var color = Color(0, 1, 0, 1); # lime default
-	if (self.name == 'Character'):
-		color = Color(1, 1, 0, 1); # yellow
-	elif (self.name == 'Character2'):
-		color = Color( 0, 1, 1, 1 ); # aqua
-	elif (self.name == 'Character3'):
-		color = Color( 1, 0, 0, 1 ); # red
-	return color;
+
 
 func change_character(node: Node2D, type):
 	var before = $NakedGuy
@@ -237,8 +228,9 @@ position = Vector2( 1.20352, 8.62366 )
 scale = Vector2( 0.299722, 0.0891969 )
 texture = ExtResource( 2 )
 hframes = 4
+script = ExtResource( 3 )
 
-[node name="Stars" parent="." instance=ExtResource( 3 )]
+[node name="Stars" parent="." instance=ExtResource( 4 )]
 position = Vector2( 0.530334, -20 )
 scale = Vector2( 0.5, 0.5 )
 emitting = false
@@ -246,4 +238,4 @@ lifetime = 0.33
 explosiveness = 1.0
 
 [node name="sound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource( 5 )

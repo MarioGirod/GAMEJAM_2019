@@ -1,16 +1,17 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Levels/Level1.gd" type="Script" id=1]
 [ext_resource path="res://Levels/CameraFollower.gd" type="Script" id=2]
 [ext_resource path="res://TilesetScenes/Tileset.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Friends/Character.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Items/Sword.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Levels/Room1.gd" type="Script" id=6]
-[ext_resource path="res://Levels/Objects/Blocker.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Levels/Objects/Lever.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Levels/Room2.gd" type="Script" id=9]
-[ext_resource path="res://Friends/Enemy_Orc.tscn" type="PackedScene" id=10]
-[ext_resource path="res://tresure.tscn" type="PackedScene" id=11]
+[ext_resource path="res://CharacterScenes/NakedGuy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Items/Sword.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Levels/Room1.gd" type="Script" id=7]
+[ext_resource path="res://Levels/Objects/Blocker.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Levels/Objects/Lever.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Levels/Room2.gd" type="Script" id=10]
+[ext_resource path="res://Friends/Enemy_Orc.tscn" type="PackedScene" id=11]
+[ext_resource path="res://tresure.tscn" type="PackedScene" id=12]
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 1 )
@@ -37,94 +38,107 @@ tile_data = PoolIntArray( 131081, 4, 0, 131082, 3, 0, 131084, 3, 1, 131085, 4, 0
 
 [node name="Character" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 231.922, 124.555 )
+player = "p1"
+speed = 60
+character_type = 0
+naked_guy = ExtResource( 5 )
+attack_range = 32
 
 [node name="Character2" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 184.704, 140.922 )
 player = "p2"
+speed = 60
+character_type = 0
+naked_guy = ExtResource( 5 )
+attack_range = 32
 
 [node name="Character3" parent="YSort" instance=ExtResource( 4 )]
 position = Vector2( 278.302, 138.603 )
 player = "p3"
+speed = 60
+character_type = 0
+naked_guy = ExtResource( 5 )
+attack_range = 32
 
-[node name="Sword" parent="YSort" instance=ExtResource( 5 )]
+[node name="Sword" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( 234.276, 218.242 )
 
 [node name="Room1" type="Node2D" parent="."]
 editor/display_folded = true
-script = ExtResource( 6 )
+script = ExtResource( 7 )
 
-[node name="Blocker0" parent="Room1" instance=ExtResource( 7 )]
+[node name="Blocker0" parent="Room1" instance=ExtResource( 8 )]
 position = Vector2( 488.196, 95.8423 )
 
-[node name="Blocker1" parent="Room1" instance=ExtResource( 7 )]
+[node name="Blocker1" parent="Room1" instance=ExtResource( 8 )]
 position = Vector2( 488.196, 223.981 )
 
-[node name="Blocker2" parent="Room1" instance=ExtResource( 7 )]
+[node name="Blocker2" parent="Room1" instance=ExtResource( 8 )]
 position = Vector2( 488.054, 160.207 )
 
-[node name="Lever" parent="Room1" instance=ExtResource( 8 )]
+[node name="Lever" parent="Room1" instance=ExtResource( 9 )]
 position = Vector2( 504.697, 100.3 )
 
-[node name="Lever2" parent="Room1" instance=ExtResource( 8 )]
+[node name="Lever2" parent="Room1" instance=ExtResource( 9 )]
 position = Vector2( 504.511, 163.926 )
 
-[node name="Lever3" parent="Room1" instance=ExtResource( 8 )]
+[node name="Lever3" parent="Room1" instance=ExtResource( 9 )]
 position = Vector2( 504.68, 227.638 )
 
-[node name="Blocker3" parent="Room1" instance=ExtResource( 7 )]
+[node name="Blocker3" parent="Room1" instance=ExtResource( 8 )]
 position = Vector2( 525.136, 96.2045 )
 
-[node name="Blocker4" parent="Room1" instance=ExtResource( 7 )]
+[node name="Blocker4" parent="Room1" instance=ExtResource( 8 )]
 position = Vector2( 526.196, 159.928 )
 
-[node name="Blocker5" parent="Room1" instance=ExtResource( 7 )]
+[node name="Blocker5" parent="Room1" instance=ExtResource( 8 )]
 position = Vector2( 525.887, 223.979 )
 
 [node name="Room2" type="Node2D" parent="."]
 position = Vector2( 512, 0 )
-script = ExtResource( 9 )
+script = ExtResource( 10 )
 
-[node name="Blocker0" parent="Room2" instance=ExtResource( 7 )]
+[node name="Blocker0" parent="Room2" instance=ExtResource( 8 )]
 position = Vector2( 487.99, 96.0346 )
 
-[node name="Blocker1" parent="Room2" instance=ExtResource( 7 )]
+[node name="Blocker1" parent="Room2" instance=ExtResource( 8 )]
 position = Vector2( 487.009, 160.12 )
 
-[node name="Blocker2" parent="Room2" instance=ExtResource( 7 )]
+[node name="Blocker2" parent="Room2" instance=ExtResource( 8 )]
 position = Vector2( 487.963, 224.042 )
 
-[node name="Enemy_Orc" parent="Room2" instance=ExtResource( 10 )]
+[node name="Enemy_Orc" parent="Room2" instance=ExtResource( 11 )]
 position = Vector2( 252.741, 86.8364 )
 
-[node name="Enemy_Orc2" parent="Room2" instance=ExtResource( 10 )]
+[node name="Enemy_Orc2" parent="Room2" instance=ExtResource( 11 )]
 position = Vector2( 284.708, 166.195 )
 
-[node name="Enemy_Orc3" parent="Room2" instance=ExtResource( 10 )]
+[node name="Enemy_Orc3" parent="Room2" instance=ExtResource( 11 )]
 position = Vector2( 242.288, 232.412 )
 
-[node name="Lever" parent="Room2" instance=ExtResource( 8 )]
+[node name="Lever" parent="Room2" instance=ExtResource( 9 )]
 position = Vector2( 504.559, 101.025 )
 
-[node name="Lever2" parent="Room2" instance=ExtResource( 8 )]
+[node name="Lever2" parent="Room2" instance=ExtResource( 9 )]
 position = Vector2( 503.679, 164.844 )
 
-[node name="Lever3" parent="Room2" instance=ExtResource( 8 )]
+[node name="Lever3" parent="Room2" instance=ExtResource( 9 )]
 position = Vector2( 503.679, 227.782 )
 
-[node name="Blocker3" parent="Room2" instance=ExtResource( 7 )]
+[node name="Blocker3" parent="Room2" instance=ExtResource( 8 )]
 position = Vector2( 520.404, 160.443 )
 
-[node name="Blocker4" parent="Room2" instance=ExtResource( 7 )]
+[node name="Blocker4" parent="Room2" instance=ExtResource( 8 )]
 position = Vector2( 520.844, 224.701 )
 
-[node name="Blocker5" parent="Room2" instance=ExtResource( 7 )]
+[node name="Blocker5" parent="Room2" instance=ExtResource( 8 )]
 position = Vector2( 520.404, 97.5044 )
 
 [node name="Room3" type="Node2D" parent="."]
 editor/display_folded = true
 position = Vector2( 1024, 0 )
 
-[node name="tresure" parent="Room3" instance=ExtResource( 11 )]
+[node name="tresure" parent="Room3" instance=ExtResource( 12 )]
 position = Vector2( 264.333, 135.359 )
 [connection signal="item_touched" from="YSort/Sword" to="Room1" method="_on_Sword_item_touched"]
 [connection signal="dead" from="Room2/Enemy_Orc" to="Room2" method="orc_ded"]
