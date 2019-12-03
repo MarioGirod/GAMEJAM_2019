@@ -4,7 +4,7 @@
 [ext_resource path="res://Levels/CameraFollower.gd" type="Script" id=2]
 [ext_resource path="res://TilesetScenes/Tileset.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Friends/Character.tscn" type="PackedScene" id=4]
-[ext_resource path="res://CharacterScenes/NakedGuy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Player/Classes/NakedGuy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Items/Sword.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Levels/Room1.gd" type="Script" id=7]
 [ext_resource path="res://Levels/Objects/Blocker.tscn" type="PackedScene" id=8]
@@ -12,6 +12,8 @@
 [ext_resource path="res://Levels/Room2.gd" type="Script" id=10]
 [ext_resource path="res://Friends/Enemy_Orc.tscn" type="PackedScene" id=11]
 [ext_resource path="res://tresure.tscn" type="PackedScene" id=12]
+
+
 
 [node name="Level1" type="Node2D"]
 script = ExtResource( 1 )

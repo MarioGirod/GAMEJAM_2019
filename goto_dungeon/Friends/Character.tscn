@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://CharacterScenes/NakedGuy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player/Classes/NakedGuy.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Sprites/arrows.png" type="Texture" id=2]
 [ext_resource path="res://Friends/Highlighter.gd" type="Script" id=3]
 [ext_resource path="res://Particles/Stars.tscn" type="PackedScene" id=4]
@@ -198,10 +198,6 @@ func get_move_vec_for_player(player):
 		self.get_node(\"Highlighter\").frame = 3
 	move_vec = move_vec.normalized()
 	
-	# test death
-	#if Input.is_action_just_pressed('ui_select'):
-		#globals.switch_scene(death_scene_path)
-		#pass
 	return move_vec
 	
 "

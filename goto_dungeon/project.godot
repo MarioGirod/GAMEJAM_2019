@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "CharacterType",
 "language": "GDScript",
 "path": "res://Friends/CharacterType.gd"
+}, {
+"base": "Node2D",
+"class": "NakedGuy",
+"language": "GDScript",
+"path": "res://Player/Classes/NakedGuy.gd"
 } ]
 _global_script_class_icons={
-"CharacterType": ""
+"CharacterType": "",
+"NakedGuy": ""
 }
 
 [application]
