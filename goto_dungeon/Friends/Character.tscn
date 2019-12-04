@@ -12,7 +12,7 @@ script/source = "extends KinematicBody2D
 export var player = \"p1\"
 export var speed = 60
 export var character_type = CharacterType.NAKED
-export var naked_guy = preload(\"res://CharacterScenes/NakedGuy.tscn\")
+#export var naked_guy = preload(\"res://CharacterScenes/NakedGuy.tscn\")
 
 var death_scene_path = \"res://Death.tscn\"
 var character_item: KinematicBody2D = null

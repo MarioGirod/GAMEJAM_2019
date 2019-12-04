@@ -3,7 +3,7 @@ extends KinematicBody2D
 export var player = "p3"
 export (int) var walk_speed = 100
 var move_dir = Vector2()
-var view_dir = Vector2()
+export var view_dir = Vector2()
 var velocity: Vector2
 
 
@@ -56,3 +56,4 @@ func _physics_process(delta):
 	get_input()
 	velocity = move_and_slide(move_dir*walk_speed)
 	$Class.movement_animation(move_dir)
+	$Highlighter.update_direction(view_dir)
